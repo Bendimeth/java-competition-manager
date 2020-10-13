@@ -1,0 +1,1 @@
+# java-competition-manager
