@@ -1,4 +1,4 @@
-package com.competition;
+package com.competition.Main;
 
 public class SystemInfo {
 

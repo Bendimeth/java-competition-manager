@@ -1,4 +1,4 @@
-package com.competition;
+package com.competition.Main;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,8 +22,8 @@ public class Main extends Application {
         stage.show();
     }
 
+
     public static void main(String[] args) {
         launch();
      }
-
 }
