@@ -18,5 +18,6 @@ module com.competition {
     //
 
     exports com.competition.JSONDataBase;
+    exports com.competition.JSONDataBase.PlayerData;
     exports com.competition.Main;
 }
