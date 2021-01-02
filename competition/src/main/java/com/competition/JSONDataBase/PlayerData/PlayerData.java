@@ -6,13 +6,17 @@ public class PlayerData {
     private  String team;
     private int id;
 
-    private  PlayerData(Builder builder){
+    public  PlayerData(){
+
+    }
+
+    private PlayerData(Builder builder){
         this.name = builder.name;
         this.team = builder.team;
         this.id = builder.id;
     }
 
-    public  static class Builder{
+    public static class Builder{
 
         private Name name;
         private  String team;
@@ -52,6 +56,9 @@ public class PlayerData {
     //endregion
 
     //region Setters
+    public void setName(Name name) {
+        this.name = name;
+    }
 
     public void setTeam(String team) {
         this.team = team;

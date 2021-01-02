@@ -8,6 +8,10 @@ public class Name {
     private String middleName;
     private String surname;
 
+    public Name(){
+
+    }
+
     private Name(Builder builder){
         this.firstName = builder.firstName;
         this.middleName = builder.middleName;
@@ -54,7 +58,7 @@ public class Name {
     //endregion
 
     //region Setter
-    public void setName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
