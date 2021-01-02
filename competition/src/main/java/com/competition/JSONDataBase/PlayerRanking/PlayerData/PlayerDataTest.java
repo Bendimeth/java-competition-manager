@@ -1,11 +1,12 @@
-package com.competition.JSONDataBase.PlayerData;
+package com.competition.JSONDataBase.PlayerRanking.PlayerData;
 
+import com.competition.JSONDataBase.Json.JsonFileReaderWriter;
+import com.competition.JSONDataBase.PlayerRanking.PlayerRanking;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerDataTest {
 
@@ -27,13 +28,9 @@ public class PlayerDataTest {
         assertEquals(playerData.getId(),idTest);
     }
 
-    @Test
-    public  void testSavingPlayerToFile() throws IOException {
-        PlayerData playerData = generateExamplePlayer();
-        PlayerDataSave.savePlayerInJson(playerData);
-    }
 
-    private PlayerData generateExamplePlayer(){
+
+    public static PlayerData generateExamplePlayer(){
         String firstNameTest = "Jakub";
         String middleNameTest = "Antoni";
         String surnameTest = "Szwajcok";
@@ -52,4 +49,6 @@ public class PlayerDataTest {
 
         return playerData;
     }
+
+
 }

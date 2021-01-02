@@ -1,6 +1,6 @@
-package com.competition.JSONDataBase.PlayerData;
+package com.competition.JSONDataBase.PlayerRanking.PlayerData;
 
-import java.security.PublicKey;
+import java.util.Objects;
 
 public class Name {
 
@@ -11,6 +11,20 @@ public class Name {
     public Name(){
 
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Name name = (Name) o;
+        return Objects.equals(firstName, name.firstName) && Objects.equals(middleName, name.middleName) && Objects.equals(surname, name.surname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, middleName, surname);
+    }
+
 
     private Name(Builder builder){
         this.firstName = builder.firstName;

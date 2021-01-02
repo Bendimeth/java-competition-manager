@@ -1,4 +1,4 @@
-package com.competition.JSONDataBase.PlayerData;
+package com.competition.JSONDataBase.PlayerRanking.PlayerData;
 
 public class PlayerData {
 

@@ -17,8 +17,8 @@ module com.competition {
     requires com.fasterxml.jackson.core;
     //
 
-
-    exports com.competition.JSONDataBase.PlayerData;
+    exports com.competition.JSONDataBase.PlayerRanking.PlayerData;
+    exports com.competition.JSONDataBase.PlayerRanking;
     exports com.competition.JSONDataBase.Json;
     exports com.competition.Main;
 }

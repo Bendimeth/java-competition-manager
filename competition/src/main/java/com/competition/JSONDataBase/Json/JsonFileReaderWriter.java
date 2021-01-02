@@ -1,43 +1,26 @@
 package com.competition.JSONDataBase.Json;
 
-import com.competition.JSONDataBase.PlayerData.PlayerData;
-import com.competition.JSONDataBase.PlayerData.PlayerDataSave;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.competition.JSONDataBase.PlayerRanking.PlayerData.PlayerData;
+import com.competition.JSONDataBase.PlayerRanking.PlayerRanking;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.*;
+import java.lang.reflect.Type;
 
 public class JsonFileReaderWriter {
 
-    private static String path;
+    //private static String path;
 
-    public static void saveFileInLocation(PlayerData content) throws IOException {
-        setPath();
-        //FileWriter file = new FileWriter(path);
-        ///file.write(content);
+    public static <A> void saveJsonObjectInFile(A obj, String path) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File(path),content);
-        //file.flush();
+        mapper.writeValue(new File(path),obj);
     }
 
-    public  static String readFile() throws IOException {
-        setPath();
+    public  static <A> A readPlayerRankingFromFile(A obj,String path) throws IOException {
         FileReader reader = new FileReader(path);
         ObjectMapper objectMapper = new ObjectMapper();
+        A objectFile = (A) objectMapper.readValue(new File(path),obj.getClass());
 
-        PlayerData content = objectMapper.readValue(new File(path),PlayerData.class);
-        //Object obj = objectMapper
-        //JsonNode node = Json.parse(reader.toString());
-        System.out.println("text: " + content.getTeam());
-
-        return null;
-    }
-
-    private static void setPath(){
-        String pathToAppData = System.getenv("APPDATA");
-        String nameOfFile = "example.json";
-        path = pathToAppData + "/"+ nameOfFile;
-        System.out.println("Path: " + path);
+        return objectFile;
     }
 }
