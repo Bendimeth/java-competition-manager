@@ -31,7 +31,6 @@ public class PlayerRanking {
     }
 
     public void addPlayerToRanking(PlayerData playerData){
-        //TODO Check if there is player with this name
 
         if(listOfPlayers.stream().anyMatch(x -> x.getName().equals(playerData.getName()))){
             //System.out.println("I got this one on list, update function activated");
@@ -48,6 +47,8 @@ public class PlayerRanking {
         }
     }
 
+    //region update existing player
+
     public void updatePlayerByID(int id,PlayerData playerData){
         PlayerData playerDataHandler = listOfPlayers.stream().filter(player->player.getId() == id).findAny().orElse(null);
         updatePlayerByObject(playerDataHandler,playerData);
@@ -57,6 +58,10 @@ public class PlayerRanking {
         currentPlayerData.copy(newPlayerData);
     }
 
+    //endregion
+
+    //region remove player
+
     public  void removePlayerFromRankingByName(Name name){
         listOfPlayers.removeIf(x -> x.getName().equals(name));
     }
@@ -65,20 +70,43 @@ public class PlayerRanking {
         listOfPlayers.removeIf(x->x.getId() == id);
     }
 
+    //endregion
+
+    //region getters
     public List<PlayerData> getListOfPlayers() {
         return listOfPlayers;
     }
+
+    public int getLastGeneratedID() {
+        return lastGeneratedID;
+    }
+    //endregion
+
+    public int getPlayerIDByName(Name name){
+        for(int i = 0; i < listOfPlayers.size();i++)
+        {
+            PlayerData playerHandler = listOfPlayers.get(i);
+            Name nameHandler = playerHandler.getName();
+
+            if(nameHandler.equals(name)) return playerHandler.getId();
+        }
+
+        System.out.println("There is no player with such a name in base: " + name.getFirstName() + " " + name.getMiddleName() + " " + name.getSurname());
+        return -1;
+    }
+
+    //region setters
 
     public void setListOfPlayers(List<PlayerData> listOfPlayers) {
         this.listOfPlayers = listOfPlayers;
     }
 
-    private static void generatePath(){
-        String pathToAppData = System.getenv("APPDATA");
-        String nameOfFile = "example.json";
-        path = pathToAppData + "/"+ nameOfFile;
-        System.out.println("Path: " + path);
+    public void setLastGeneratedID(int lastGeneratedID) {
+        this.lastGeneratedID = lastGeneratedID;
     }
+    //endregion
+
+    //region save/load
 
     public void saveRankingToFile() throws IOException {
         generatePath();
@@ -91,11 +119,12 @@ public class PlayerRanking {
         this.listOfPlayers = playerRanking.listOfPlayers;
     }
 
-    public int getLastGeneratedID() {
-        return lastGeneratedID;
-    }
+    //endregion
 
-    public void setLastGeneratedID(int lastGeneratedID) {
-        this.lastGeneratedID = lastGeneratedID;
+    private static void generatePath(){
+        String pathToAppData = System.getenv("APPDATA");
+        String nameOfFile = "example.json";
+        path = pathToAppData + "/"+ nameOfFile;
+        System.out.println("Path: " + path);
     }
 }

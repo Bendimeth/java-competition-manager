@@ -54,6 +54,16 @@ public class PlayerRankingTest {
         playerRanking.saveRankingToFile();
     }
 
+    @Test
+    public void testGetIdPlayerByName(){
+        PlayerData playerData = PlayerDataTest.generateExamplePlayer();
+        PlayerRanking playerRanking = generateExampleRanking();
+        Name nameOfPlayer = playerData.getName();
+
+        int id = playerRanking.getPlayerIDByName(nameOfPlayer);
+        System.out.println("ID: " + id);
+    }
+
     private PlayerRanking generateExampleRanking(){
         PlayerRanking playerRanking = new PlayerRanking();
 
