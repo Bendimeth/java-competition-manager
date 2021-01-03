@@ -40,6 +40,20 @@ public class PlayerRankingTest {
         System.out.println("Player ranking size after: " + playerRanking.getListOfPlayers().size());
     }
 
+    @Test
+    public  void testUpdatePlayerDataById() throws IOException {
+        PlayerRanking playerRanking = new PlayerRanking();
+
+        PlayerData playerData = PlayerDataTest.generateExamplePlayer();
+        playerRanking.addPlayerToRanking(playerData);
+
+        PlayerData playerData1 = PlayerDataTest.generateExamplePlayer();
+        playerData1.setTeam("Virtus");
+
+        playerRanking.updatePlayerByID(0,playerData1);
+        playerRanking.saveRankingToFile();
+    }
+
     private PlayerRanking generateExampleRanking(){
         PlayerRanking playerRanking = new PlayerRanking();
 

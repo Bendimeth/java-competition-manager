@@ -34,12 +34,9 @@ public class PlayerRanking {
         //TODO Check if there is player with this name
 
         if(listOfPlayers.stream().anyMatch(x -> x.getName().equals(playerData.getName()))){
-            System.out.println("I got this one on list, update function activated");
-
+            //System.out.println("I got this one on list, update function activated");
             PlayerData playerDataHandler = listOfPlayers.stream().filter(player -> player.getName().equals(playerData.getName())).findAny().orElse(null);
-
-            playerDataHandler.copy(playerData);
-
+            updatePlayerByObject(playerDataHandler,playerData);
         }
         else{
             playerData.setId(lastGeneratedID + 1);
@@ -51,7 +48,14 @@ public class PlayerRanking {
         }
     }
 
+    public void updatePlayerByID(int id,PlayerData playerData){
+        PlayerData playerDataHandler = listOfPlayers.stream().filter(player->player.getId() == id).findAny().orElse(null);
+        updatePlayerByObject(playerDataHandler,playerData);
+    }
 
+    public void updatePlayerByObject(PlayerData currentPlayerData, PlayerData newPlayerData){
+        currentPlayerData.copy(newPlayerData);
+    }
 
     public  void removePlayerFromRankingByName(Name name){
         listOfPlayers.removeIf(x -> x.getName().equals(name));
