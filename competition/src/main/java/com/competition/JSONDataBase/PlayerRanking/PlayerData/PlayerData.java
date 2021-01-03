@@ -3,6 +3,7 @@ package com.competition.JSONDataBase.PlayerRanking.PlayerData;
 public class PlayerData {
 
     private  Name name;
+    private Record record;
     private  String team;
     private int id;
 
@@ -12,6 +13,7 @@ public class PlayerData {
 
     private PlayerData(Builder builder){
         this.name = builder.name;
+        this.record = builder.record;
         this.team = builder.team;
     }
 
@@ -24,10 +26,16 @@ public class PlayerData {
     public static class Builder{
 
         private Name name;
+        private Record record;
         private  String team;
 
         public Builder name(final Name name){
             this.name = name;
+            return this;
+        }
+
+        public Builder record(final Record record){
+            this.record = record;
             return this;
         }
 
@@ -45,6 +53,8 @@ public class PlayerData {
 
     public Name getName() { return name; }
 
+    public Record getRecord(){return record;}
+
     public String getTeam() {
         return team;
     }
@@ -58,6 +68,8 @@ public class PlayerData {
     public void setName(Name name) {
         this.name = name;
     }
+
+    public void setRecord(Record record){this.record = record;}
 
     public void setTeam(String team) {
         this.team = team;

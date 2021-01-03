@@ -33,15 +33,19 @@ public class PlayerDataTest {
         String middleNameTest = "Antoni";
         String surnameTest = "Szwajcok";
         String teamTest = "Nigma";
-        int idTest = 13;
 
         Name name = new Name.Builder().firstName(firstNameTest)
                 .middleName(middleNameTest)
                 .surname(surnameTest)
                 .build();
 
+        Record record = new Record.Builder().win(3)
+                                            .lose(3)
+                                            .build();
+
         PlayerData playerData = new PlayerData.Builder().name(name)
                 .team(teamTest)
+                .record(record)
                 .build();
 
         return playerData;
