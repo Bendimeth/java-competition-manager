@@ -31,6 +31,14 @@ public class Record {
         }
     }
 
+    public void addWin(){
+        win++;
+    }
+
+    public void addLose(){
+        lose++;
+    }
+
     //region Getters
     public int getWin() {
         return win;

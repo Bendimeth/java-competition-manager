@@ -49,6 +49,11 @@ public class PlayerData {
         }
     }
 
+    public static PlayerData generatePlayer(Name name,Record record,String team){
+        PlayerData playerData = new PlayerData.Builder().name(name).record(record).team(team).build();
+        return  playerData;
+    }
+
     //region Getters
 
     public Name getName() { return name; }
