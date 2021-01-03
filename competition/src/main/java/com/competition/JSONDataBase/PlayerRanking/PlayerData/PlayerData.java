@@ -13,19 +13,18 @@ public class PlayerData {
     private PlayerData(Builder builder){
         this.name = builder.name;
         this.team = builder.team;
-        this.id = builder.id;
+    }
+
+    public void copy(PlayerData playerData){
+        this.name = playerData.getName();
+        this.team = playerData.getTeam();
+        this.id = playerData.getId();
     }
 
     public static class Builder{
 
         private Name name;
         private  String team;
-        private  int id;
-
-        public Builder id(final int id){
-            this.id = id;
-            return this;
-        }
 
         public Builder name(final Name name){
             this.name = name;

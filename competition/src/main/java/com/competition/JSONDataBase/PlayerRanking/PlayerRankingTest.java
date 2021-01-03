@@ -41,12 +41,16 @@ public class PlayerRankingTest {
     }
 
     private PlayerRanking generateExampleRanking(){
-        PlayerData playerData = PlayerDataTest.generateExamplePlayer();
         PlayerRanking playerRanking = new PlayerRanking();
 
         for(int i = 0; i < 3;i++){
+            PlayerData playerData = PlayerDataTest.generateExamplePlayer();
             playerRanking.addPlayerToRanking(playerData);
         }
+
+        PlayerData playerData = PlayerDataTest.generateExamplePlayer();
+        playerData.setTeam("Virtus");
+        playerRanking.addPlayerToRanking(playerData);
 
         return  playerRanking;
     }

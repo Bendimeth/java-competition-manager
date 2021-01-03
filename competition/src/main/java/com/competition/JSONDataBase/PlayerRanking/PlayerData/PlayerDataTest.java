@@ -28,8 +28,6 @@ public class PlayerDataTest {
         assertEquals(playerData.getId(),idTest);
     }
 
-
-
     public static PlayerData generateExamplePlayer(){
         String firstNameTest = "Jakub";
         String middleNameTest = "Antoni";
@@ -44,11 +42,8 @@ public class PlayerDataTest {
 
         PlayerData playerData = new PlayerData.Builder().name(name)
                 .team(teamTest)
-                .id(idTest)
                 .build();
 
         return playerData;
     }
-
-
 }
