@@ -21,4 +21,6 @@ module com.competition {
     exports com.competition.JSONDataBase.PlayerRanking;
     exports com.competition.JSONDataBase.Json;
     exports com.competition.Main;
+    exports com.competition.bracket;
+    exports com.competition.menu;
 }
