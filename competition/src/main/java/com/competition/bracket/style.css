@@ -1,0 +1,118 @@
+.pane {
+    -fx-border-insets: 150px 340px;
+    -fx-padding: 25px;
+    -fx-border-radius: 4px;
+    -fx-border-width: 2px;
+    -fx-border-color: #d1d7e0;
+}
+
+.button {
+	-fx-text-fill:rgb(248,247,255);
+    -fx-font-weight: 500;
+    -fx-font-family: "Raleway";
+	-fx-background-color: linear-gradient(rgb(57,144,181), rgb(50,69,130));
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-spacing: 5;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(rgb(50,69,130), rgb(57,144,181));
+    -fx-spacing: 5;
+    -fx-border-width: 0;
+}
+
+#fancytext {
+    -fx-font: 50px Tahoma;
+    -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, rgb(20,0,255), rgb(0,0,0));
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+    -fx-underline: true;
+}
+#rounds {
+	-fx-font-weight: 900;
+    -fx-underline: true;
+}
+
+.root{
+    -fx-font-size: 8pt;
+}
+
+.bracket-top-1 {
+    -fx-min-width: 50px;
+    -fx-border-insets: 15px 5px -20px 0;
+    -fx-background-insets: 5px;
+    -fx-border-style: solid solid hidden hidden;
+}
+
+.bracket-middle-1 {
+    -fx-min-width: 100px;
+    -fx-border-insets: 0 5px 15px 45px;
+    -fx-border-style: hidden hidden solid hidden;
+}
+
+.bracket-bottom-1 {
+    -fx-min-width: 50px;
+    -fx-border-insets: -20px 5px 15px 0;
+    -fx-background-insets: 5px;
+    -fx-border-style: hidden solid solid hidden;
+}
+
+.bracket-top-2 {
+    -fx-min-width: 50px;
+    -fx-border-insets: 15px 5px -50px 0;
+    -fx-background-insets: 5px;
+    -fx-border-style: solid solid hidden hidden;
+}
+
+.bracket-middle-2 {
+    -fx-min-width: 100px;
+    -fx-border-insets: 0 5px 15px 45px;
+    -fx-border-style: hidden hidden solid hidden;
+}
+
+.bracket-bottom-2 {
+    -fx-min-width: 50px;
+    -fx-border-insets: -50px 5px 15px 0;
+    -fx-background-insets: 5px;
+    -fx-border-style: hidden solid solid hidden;
+}
+
+.bracket-top-3 {
+    -fx-min-width: 50px;
+    -fx-border-insets: 15px 5px -120px 0;
+    -fx-background-insets: 5px;
+    -fx-border-style: solid solid hidden hidden;
+}
+
+.bracket-middle-3 {
+    -fx-min-width: 100px;
+    -fx-border-insets: 0 5px 15px 45px;
+    -fx-border-style: hidden hidden solid hidden;
+}
+
+.bracket-bottom-3 {
+    -fx-min-width: 50px;
+    -fx-border-insets: -120px 5px 15px 0;
+    -fx-background-insets: 5px;
+    -fx-border-style: hidden solid solid hidden;
+}
+.bracket-top-4 {
+    -fx-min-width: 50px;
+    -fx-border-insets: 15px 5px -250px 0;
+    -fx-background-insets: 5px;
+    -fx-border-style: solid solid hidden hidden;
+}
+
+.bracket-middle-4 {
+    -fx-min-width: 100px;
+    -fx-border-insets: 0 5px 15px 45px;
+    -fx-border-style: hidden hidden solid hidden;
+}
+
+.bracket-bottom-4 {
+    -fx-min-width: 50px;
+    -fx-border-insets: -250px 5px 15px 0;
+    -fx-background-insets: 5px;
+    -fx-border-style: hidden solid solid hidden;
+}
+

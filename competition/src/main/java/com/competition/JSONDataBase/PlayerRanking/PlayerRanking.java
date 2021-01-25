@@ -84,7 +84,7 @@ public class PlayerRanking {
     //endregion
 
     public int getPlayerIDByName(Name name){
-        for(int i = 0; i < listOfPlayers.size();i++)
+        for(int i = 0; i < listOfPlayers.size(); i++)
         {
             PlayerData playerHandler = listOfPlayers.get(i);
             Name nameHandler = playerHandler.getName();
