@@ -1,6 +1,7 @@
 module com.competition {
     //JavaFX
     requires javafx.controls;
+    requires javafx.fxml;
     //
 
     //Junit
@@ -15,8 +16,11 @@ module com.competition {
     //Jackson
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.core;
+    requires java.desktop;
     //
 
     exports com.competition.JSONDataBase;
     exports com.competition.Main;
+    exports com.competition.MainPage;
+    exports com.competition.Player;
 }
