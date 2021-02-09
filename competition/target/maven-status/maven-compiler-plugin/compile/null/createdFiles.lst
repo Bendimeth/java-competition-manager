@@ -1,0 +1,9 @@
+com\competition\JSONDataBase\JSONDataBaseManager.class
+com\competition\JSONDataBase\JSONDataBaseManagerTest.class
+com\competition\MainPage\MainPage.class
+module-info.class
+com\competition\JSONDataBase\JSONTestMain.class
+com\competition\Main\SystemInfo.class
+com\competition\JSONDataBase\SimpleTestCaseJson.class
+com\competition\Main\Main.class
+com\competition\MainPage\MainPageController.class
