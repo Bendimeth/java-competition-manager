@@ -1,4 +1,5 @@
 module com.competition {
+
     //JavaFX
     requires javafx.controls;
     //
@@ -15,6 +16,7 @@ module com.competition {
     //Jackson
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.core;
+    requires javafx.fxml;
     //
 
     exports com.competition.JSONDataBase.PlayerRanking.PlayerData;
@@ -23,4 +25,8 @@ module com.competition {
     exports com.competition.Main;
     exports com.competition.bracket;
     exports com.competition.menu;
+    exports com.competition.MainPage;
+    exports com.competition.Player;
+
+    opens com.competition.MainPage to javafx.fxml;
 }
