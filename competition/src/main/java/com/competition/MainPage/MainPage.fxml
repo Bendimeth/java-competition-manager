@@ -5,31 +5,32 @@
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.competition.MainPage.MainPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane fx:id="paneBtn" prefHeight="900.0" prefWidth="273.0" style="-fx-background-color: #734C29" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="btncreatetournament1" blendMode="MULTIPLY" layoutY="236.0" mnemonicParsing="false" onAction="#btnclick_ranking" prefHeight="130.0" prefWidth="273.0" text="Ranking">
+            <Button fx:id="btnranking" blendMode="MULTIPLY" layoutY="236.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="273.0" text="Ranking">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="btneditplayerteam" blendMode="MULTIPLY" layoutY="496.0" mnemonicParsing="false" onAction="#btnclick_editplayerteam" prefHeight="130.0" prefWidth="273.0" text="Edycja gracza/drużyny">
+            <Button fx:id="btneditplayerteam" blendMode="MULTIPLY" layoutY="496.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="273.0" text="Edycja gracza/drużyny">
                <font>
                   <Font size="24.0" />
                </font></Button>
-            <Button fx:id="btncreatetournament" blendMode="MULTIPLY" layoutY="366.0" mnemonicParsing="false" onAction="#btnclick_createtournament" prefHeight="130.0" prefWidth="273.0" text="Stwórz turniej">
+            <Button fx:id="btncreatetournament" blendMode="MULTIPLY" layoutY="366.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="273.0" text="Stwórz turniej">
                <font>
                   <Font size="24.0" />
                </font></Button>
-            <Button fx:id="btnhistory" blendMode="MULTIPLY" layoutY="626.0" mnemonicParsing="false" onAction="#btnclick_history" prefHeight="130.0" prefWidth="273.0" text="historia rozgrywek">
+            <Button fx:id="btnhistory" blendMode="MULTIPLY" layoutY="626.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="273.0" text="historia rozgrywek">
                <font>
                   <Font size="24.0" />
                </font></Button>
-            <Button fx:id="btnhelp" blendMode="MULTIPLY" layoutY="756.0" mnemonicParsing="false" onAction="#btnclick_help" prefHeight="130.0" prefWidth="273.0" text="instrukcja obslugi">
+            <Button fx:id="btnhelp" blendMode="MULTIPLY" layoutY="756.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="273.0" text="instrukcja obslugi">
                <font>
                   <Font size="24.0" />
                </font></Button>
@@ -42,7 +43,7 @@
                </image></ImageView>
          </children>
       </Pane>
-      <AnchorPane id="paneShow" fx:id="paneShow" layoutX="273.0" prefHeight="900.0" prefWidth="1328.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="paneShow" layoutX="273.0" prefHeight="900.0" prefWidth="1328.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="273.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets left="100.0" />
          </padding></AnchorPane>

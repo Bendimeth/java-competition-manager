@@ -13,7 +13,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        MainPageController.start_main_page(stage);
+        MainPageController controller =new MainPageController();
+        controller.start_main_page(stage);
 
     }
 
