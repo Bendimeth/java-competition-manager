@@ -35,7 +35,7 @@ public class PlayerRankingTest {
     @Test
     public  void testRemovePlayerByIndex(){
         PlayerRanking playerRanking = generateExampleRanking();
-        int exampleID = 13;
+        int exampleID = 7;
         System.out.println("Player ranking size before: " + playerRanking.getListOfPlayers().size());
         playerRanking.removePlayerFromByID(exampleID);
         System.out.println("Player ranking size after: " + playerRanking.getListOfPlayers().size());
@@ -168,7 +168,7 @@ public class PlayerRankingTest {
         }
 
         {
-            Name name = new Name.Builder().firstName("Jan")
+            Name name = new Name.Builder().firstName("Miłosz")
                     .middleName("Aleksander")
                     .surname("Kowalczyk")
                     .build();

@@ -29,4 +29,5 @@ module com.competition {
     exports com.competition.Player;
 
     opens com.competition.MainPage to javafx.fxml;
+    opens com.competition.Player to javafx.fxml;
 }
