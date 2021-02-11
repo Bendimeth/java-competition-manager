@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView fx:id="RankingList" layoutX="14.0" layoutY="120.0" prefHeight="946.0" prefWidth="1890.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+      <Label fx:id="firstPlayerLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="93.0" prefWidth="1892.0" text="Label" textAlignment="CENTER">
+         <font>
+            <Font size="42.0" />
+         </font>
+      </Label>
+   </children>
+   <stylesheets>
+      <URL value="@./main_styles.css" />
+   </stylesheets>
+</AnchorPane>

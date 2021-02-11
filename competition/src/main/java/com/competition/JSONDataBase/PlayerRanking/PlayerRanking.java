@@ -3,7 +3,6 @@ package com.competition.JSONDataBase.PlayerRanking;
 import com.competition.JSONDataBase.Json.JsonFileReaderWriter;
 import com.competition.JSONDataBase.PlayerRanking.PlayerData.Name;
 import com.competition.JSONDataBase.PlayerRanking.PlayerData.PlayerData;
-import com.competition.JSONDataBase.PlayerRanking.PlayerData.Record;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -128,4 +127,5 @@ public class PlayerRanking {
         path = pathToAppData + "/"+ nameOfFile;
         System.out.println("Path: " + path);
     }
+
 }
