@@ -13,12 +13,14 @@ public class JsonFileReaderWriter {
 
     public static <A> void saveJsonObjectInFile(A obj, String path) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        //mapper.enableDefaultTyping();
         mapper.writeValue(new File(path),obj);
     }
 
     public  static <A> A readPlayerRankingFromFile(A obj,String path) throws IOException {
         FileReader reader = new FileReader(path);
         ObjectMapper objectMapper = new ObjectMapper();
+        //objectMapper.enableDefaultTyping();
         A objectFile = (A) objectMapper.readValue(new File(path),obj.getClass());
 
         return objectFile;
