@@ -39,7 +39,7 @@ public class Team extends PlayerComponent {
     @Override
     public String giveInfo(){
         int size = teamPlayerList.size();
-        String result = "Team name: " + getName().getTeamName() + "Size: " + size + " ";
+        String result = "Team name: " + getName().getTeamName() + " Team ID: "+ getId() + " Size: " + size + " ";
 
         if(size != 0){
             result += "content: ";

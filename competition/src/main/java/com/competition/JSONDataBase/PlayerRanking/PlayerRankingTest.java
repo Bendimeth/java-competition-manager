@@ -12,17 +12,24 @@ import java.io.IOException;
 public class PlayerRankingTest {
 
     @Test
-    public  void testSavingRankingToFile() throws IOException {
+    public void testSavingRankingToFile() throws IOException {
         PlayerRanking playerRanking = generateExampleRanking();
         playerRanking.saveRankingToFile();
     }
 
     @Test
-    public  void testLoadRankingFromFile() throws IOException {
+    public void testLoadRankingFromFile() throws IOException {
         PlayerRanking playerRanking = new PlayerRanking();
         playerRanking.loadRankingFromFile();
         playerRanking.printPlayerRankingInfo();
         System.out.println("player base length : " + playerRanking.getListOfPlayersTeams().size());
+        System.out.println("Last generated ID: " + playerRanking.getLastGeneratedID());
+    }
+
+    @Test
+    public void testSaveAndLoad() throws IOException {
+        testSavingRankingToFile();
+        testLoadRankingFromFile();
     }
 
     @Test

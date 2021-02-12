@@ -43,7 +43,8 @@ public class PlayerRanking {
             updatePlayerByObject(handler,player,team);
         }else{
             //Create new one
-
+            lastGeneratedID++;
+            player.setId(lastGeneratedID);
             if(team == null){
                 listOfPlayersTeams.add(player);
             }else {
@@ -53,6 +54,8 @@ public class PlayerRanking {
                 if(teamHandler != null){
                     teamHandler.add(player);
                 }else{
+                    lastGeneratedID++;
+                    team.setId(lastGeneratedID);
                     listOfPlayersTeams.add(team);
                     team.add(player);
                 }
@@ -198,6 +201,7 @@ public class PlayerRanking {
         generatePath();
         PlayerRanking playerRanking = JsonFileReaderWriter.readPlayerRankingFromFile(this,path);
         this.listOfPlayersTeams = playerRanking.listOfPlayersTeams;
+        this.lastGeneratedID = playerRanking.getLastGeneratedID();
     }
 
 
