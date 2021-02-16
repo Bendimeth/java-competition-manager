@@ -44,7 +44,7 @@ public class Team extends PlayerComponent {
         if(size != 0){
             result += "content: ";
             for(PlayerData playerData : teamPlayerList){
-                result += playerData.giveInfo() + " ";
+                result += playerData.giveInfo() + "####";
             }
         }
 
