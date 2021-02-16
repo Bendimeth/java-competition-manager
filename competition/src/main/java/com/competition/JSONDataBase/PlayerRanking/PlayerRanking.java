@@ -28,6 +28,26 @@ public class PlayerRanking {
         listOfPlayersTeams = new ArrayList<>();
     }
 
+    public ArrayList<PlayerDataWithTeam> generatePlayerDataWithTeamInfo(){
+        ArrayList<PlayerDataWithTeam> result = new ArrayList<>();
+
+        for(PlayerComponent playerComponent : listOfPlayersTeams){
+            if(playerComponent instanceof PlayerData){
+                PlayerDataWithTeam playerDataWithTeam = new PlayerDataWithTeam((PlayerData)playerComponent,null);
+                result.add(playerDataWithTeam);
+            } else if(playerComponent instanceof Team){
+                Team team = (Team) playerComponent;
+
+                for(PlayerData playerData : team.getTeamPlayerList()){
+                    PlayerDataWithTeam playerDataWithTeam = new PlayerDataWithTeam(playerData,team);
+                    result.add(playerDataWithTeam);
+                }
+            }
+        }
+
+        return result;
+    }
+
     public void printPlayerRankingInfo(){
         for(PlayerComponent playerComponent:listOfPlayersTeams){
             System.out.println(playerComponent.giveInfo());
@@ -342,4 +362,15 @@ public class PlayerRanking {
         System.out.println("Path: " + path);
     }
     //endregion
+
+
+    public class PlayerDataWithTeam{
+        public PlayerDataWithTeam(PlayerData playerData,Team team){
+            this.playerData = playerData;
+            this.team = team;
+        }
+
+        public PlayerData playerData;
+        public Team team;
+    }
 }

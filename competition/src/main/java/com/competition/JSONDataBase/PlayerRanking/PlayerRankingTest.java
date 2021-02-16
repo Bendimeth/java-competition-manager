@@ -8,6 +8,7 @@ import com.competition.JSONDataBase.PlayerRanking.Team.Team;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PlayerRankingTest {
 
@@ -108,6 +109,14 @@ public class PlayerRankingTest {
 
         int id = playerRanking.getTeamPlayerIDByName(nameOfPlayer);
         System.out.println("ID: " + id);
+    }
+
+    @Test
+    public void testGenerateInfoTeamPlayerData()throws IOException{
+        PlayerRanking playerRanking = generateExampleRanking();
+        ArrayList<PlayerRanking.PlayerDataWithTeam> info = playerRanking.generatePlayerDataWithTeamInfo();
+        playerRanking.printPlayerRankingInfo();
+        System.out.println("Size: " + info.size());
     }
 
     //good
