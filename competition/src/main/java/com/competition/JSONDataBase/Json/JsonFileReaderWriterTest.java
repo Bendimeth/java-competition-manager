@@ -13,8 +13,5 @@ public class JsonFileReaderWriterTest {
         PlayerRanking ranking =  JsonFileReaderWriter.readPlayerRankingFromFile();
         System.out.println("ranking: " + ranking.getListOfPlayers().size());
     }
-
-
-     */
-
+    */
 }
