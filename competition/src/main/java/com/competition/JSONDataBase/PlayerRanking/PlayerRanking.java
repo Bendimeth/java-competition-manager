@@ -5,7 +5,6 @@ import com.competition.JSONDataBase.PlayerRanking.PlayerComponent.PlayerComponen
 import com.competition.JSONDataBase.PlayerRanking.PlayerData.Name;
 import com.competition.JSONDataBase.PlayerRanking.PlayerData.PlayerData;
 import com.competition.JSONDataBase.PlayerRanking.Team.Team;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
