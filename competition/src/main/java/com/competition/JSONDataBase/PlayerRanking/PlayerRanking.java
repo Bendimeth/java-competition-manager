@@ -107,6 +107,7 @@ public class PlayerRanking {
             }
         }
 
+
         /*
         if(listOfPlayersTeams.stream().anyMatch(x -> x.getName().equals(player.getName()))){
             //System.out.println("I got this one on list, update function activated");
@@ -124,14 +125,6 @@ public class PlayerRanking {
 
     public void addTeamToRanking(Team team){
 
-
-            listOfPlayersTeams.add(playerComponent);
-        }
-        */
-    }
-
-    public void addTeamToRanking(Team team){
-
         Team teamHandler = findTeamInDataBase(team);
 
         if(teamHandler == null){
@@ -139,87 +132,7 @@ public class PlayerRanking {
         }else{
             //update
             teamHandler.copy(team);
-
         }
-    }
-
-
-
-    private PlayerData findPlayerInDataBase(Name playerName){
-
-        for(int i = 0; i < listOfPlayersTeams.size(); i++){
-            PlayerComponent pcHanler = listOfPlayersTeams.get(i);
-
-            if(pcHanler instanceof Team){
-                Team team = (Team) pcHanler;
-
-                for(PlayerData player : team.getTeamPlayerList()){
-                    if(player.getName().equals(playerName)){
-                        return player;
-                    }
-                }
-            }
-            else {
-                if(pcHanler.getName().equals(playerName)){
-                    return (PlayerData) pcHanler;
-                }
-            }
-        }
-
-        return  null;
-    }
-
-    private Team findTeamInDataBase(Team team){
-
-        for(PlayerComponent pc: listOfPlayersTeams){
-            if(pc instanceof Team){
-                if(pc.getName().equals(team.getName())){
-                    return (Team) pc;
-                }
-            }
-
-        }
-
-        return null;
-    }
-
-    private Team findTeamInDataBaseByName(String name){
-
-        for(PlayerComponent pc: listOfPlayersTeams){
-            if(pc instanceof Team){
-                if(pc.getName().getTeamName() == name){
-                    return (Team) pc;
-                }
-            }
-        }
-
-        System.out.println("Find team in data base: there is no team with name: " + name);
-        return null;
-    }
-
-    public int getTeamPlayerIDByName(Name name){
-        for(int i = 0; i < listOfPlayersTeams.size(); i++)
-        {
-            if(listOfPlayersTeams.get(i) instanceof PlayerData)
-            {
-                PlayerData playerHandler = (PlayerData) listOfPlayersTeams.get(i);
-                Name nameHandler = playerHandler.getName();
-                if(nameHandler.equals(name)) return playerHandler.getId();
-            } else if(listOfPlayersTeams.get(i) instanceof Team){
-                Team team = (Team)listOfPlayersTeams.get(i);
-
-                if(team.getName().equals(name)) return team.getId();
-
-                for(PlayerData pd: team.getTeamPlayerList()){
-                    if(pd.getName().equals(name))return pd.getId();
-                }
-            }
-
-
-        }
-
-        System.out.println("There is no player with such a name in base: " + name.getFirstName() + " " + name.getMiddleName() + " " + name.getSurname());
-        return -1;
     }
 
 
@@ -347,28 +260,26 @@ public class PlayerRanking {
     //region remove player
 
     public PlayerData removePlayerFromRankingByName(Name name){
+        for(PlayerComponent playerComponent : listOfPlayersTeams){
+            if(playerComponent instanceof Team){
+                Team team = (Team) playerComponent;
 
-            for(PlayerComponent playerComponent : listOfPlayersTeams){
-                if(playerComponent instanceof Team){
-                    Team team = (Team) playerComponent;
-
-                    for(PlayerData pc: team.getTeamPlayerList()){
-                        if(pc.getName().equals(name)){
-                            PlayerData playerDataHandler = pc;
-                            team.getTeamPlayerList().remove(pc);
-                            return playerDataHandler;
-                        }
-                    }
-                    //team.getTeamPlayerList().removeIf(x -> x.getName().equals(name));
-                }else if(playerComponent instanceof PlayerData){
-                    if(playerComponent.getName().equals(name)){
-                        PlayerData playerDataHandler = (PlayerData) playerComponent;
-                        listOfPlayersTeams.remove(playerComponent);
+                for(PlayerData pc: team.getTeamPlayerList()){
+                    if(pc.getName().equals(name)){
+                        PlayerData playerDataHandler = pc;
+                        team.getTeamPlayerList().remove(pc);
                         return playerDataHandler;
                     }
                 }
+                //team.getTeamPlayerList().removeIf(x -> x.getName().equals(name));
+            }else if(playerComponent instanceof PlayerData){
+                if(playerComponent.getName().equals(name)){
+                    PlayerData playerDataHandler = (PlayerData) playerComponent;
+                    listOfPlayersTeams.remove(playerComponent);
+                    return playerDataHandler;
+                }
             }
-
+        }
 
         return null;
     }
@@ -460,3 +371,4 @@ public class PlayerRanking {
         public PlayerData playerData;
         public Team team;
     }
+}

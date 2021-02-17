@@ -7,17 +7,9 @@ public class Name {
     private String firstName;
     private String middleName;
     private String surname;
-    private String teamName;
 
     public Name(){
 
-    }
-
-    private Name(Builder builder){
-        this.firstName = builder.firstName;
-        this.middleName = builder.middleName;
-        this.surname = builder.surname;
-        this.teamName = builder.teamName;
     }
 
     @Override
@@ -25,22 +17,25 @@ public class Name {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Name name = (Name) o;
-        return Objects.equals(firstName, name.firstName) &&
-                Objects.equals(middleName, name.middleName) &&
-                Objects.equals(surname, name.surname) &&
-                Objects.equals(teamName,name.teamName);
+        return Objects.equals(firstName, name.firstName) && Objects.equals(middleName, name.middleName) && Objects.equals(surname, name.surname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, middleName, surname,teamName);
+        return Objects.hash(firstName, middleName, surname);
+    }
+
+
+    private Name(Builder builder){
+        this.firstName = builder.firstName;
+        this.middleName = builder.middleName;
+        this.surname = builder.surname;
     }
 
     public static class Builder{
         private String firstName;
         private String middleName;
         private String surname;
-        private String teamName;
 
         public Builder firstName(final String firstName){
             this.firstName = firstName;
@@ -54,11 +49,6 @@ public class Name {
 
         public Builder surname(final String surname){
             this.surname = surname;
-            return this;
-        }
-
-        public Builder teamName(final String teamName){
-            this.teamName = teamName;
             return this;
         }
 
@@ -79,8 +69,6 @@ public class Name {
     public String getSurname() {
         return surname;
     }
-
-    public String getTeamName() { return teamName; }
     //endregion
 
     //region Setter
@@ -95,7 +83,5 @@ public class Name {
     public void setSurname(String surname) {
         this.surname = surname;
     }
-
-    public void setTeamName(String teamName) { this.teamName = teamName; }
     //endregion
 }
