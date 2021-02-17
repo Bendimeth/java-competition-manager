@@ -4,124 +4,69 @@ import com.competition.JSONDataBase.PlayerRanking.PlayerData.Name;
 import com.competition.JSONDataBase.PlayerRanking.PlayerData.PlayerData;
 import com.competition.JSONDataBase.PlayerRanking.PlayerData.PlayerDataTest;
 import com.competition.JSONDataBase.PlayerRanking.PlayerData.Record;
-import com.competition.JSONDataBase.PlayerRanking.Team.Team;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class PlayerRankingTest {
 
-    //good
     @Test
-    public void testSavingRankingToFile() throws IOException {
+    public  void testSavingRankingToFile() throws IOException {
         PlayerRanking playerRanking = generateExampleRanking();
         playerRanking.saveRankingToFile();
     }
 
-    //good
     @Test
-    public void testLoadRankingFromFile() throws IOException {
+    public  void testLoadRankingFromFile() throws IOException {
         PlayerRanking playerRanking = new PlayerRanking();
         playerRanking.loadRankingFromFile();
-        playerRanking.printPlayerRankingInfo();
-        System.out.println("player base length : " + playerRanking.getListOfPlayersTeams().size());
-        System.out.println("Last generated ID: " + playerRanking.getLastGeneratedID());
+        System.out.println("player base length : " + playerRanking.getListOfPlayers().size());
     }
 
-    //good
     @Test
-    public void testSaveAndLoad() throws IOException {
-        testSavingRankingToFile();
-        testLoadRankingFromFile();
-    }
-
-    //good
-    @Test
-    public void testRemovePlayerFromListByName() throws IOException {
+    public void testRemovePlayerFromListByName(){
         PlayerRanking playerRanking = generateExampleRanking();
-        Name name = new Name.Builder().firstName("Jakub").middleName("Antoni").surname("Poniatowski").build();
-        playerRanking.printPlayerRankingInfo();
-        System.out.println("Player ranking size before: " + playerRanking.getListOfPlayersTeams().size());
+        Name name = new Name.Builder().firstName("Jakub").middleName("Antoni").surname("Szwajcok").build();
+        System.out.println("Player ranking size before: " + playerRanking.getListOfPlayers().size());
         playerRanking.removePlayerFromRankingByName(name);
-        System.out.println("Player ranking size after: " + playerRanking.getListOfPlayersTeams().size());
-        playerRanking.printPlayerRankingInfo();
+        System.out.println("Player ranking size after: " + playerRanking.getListOfPlayers().size());
     }
 
-    //good
     @Test
-    public void testUpdatePlayerByObject() throws IOException {
+    public  void testRemovePlayerByIndex(){
         PlayerRanking playerRanking = generateExampleRanking();
-        PlayerData pd = PlayerDataTest.generateExamplePlayer();
-        Team team = new Team(new Name.Builder().teamName("czolgi").build());
-        playerRanking.addPlayerToRanking(pd,team);
-        playerRanking.printPlayerRankingInfo();
-        pd.setRecord(new Record.Builder().win(20).lose(20).build());
-        System.out.println(" ");
-        playerRanking.updatePlayer(pd,null);
-        playerRanking.printPlayerRankingInfo();
+        int exampleID = 7;
+        System.out.println("Player ranking size before: " + playerRanking.getListOfPlayers().size());
+        playerRanking.removePlayerFromByID(exampleID);
+        System.out.println("Player ranking size after: " + playerRanking.getListOfPlayers().size());
     }
 
-    //good
-    @Test
-    public void testRemovePlayerByIndex() throws IOException {
-        PlayerRanking playerRanking = generateExampleRanking();
-        int exampleID = 5;
-        playerRanking.printPlayerRankingInfo();
-        System.out.println("Player ranking size before: " + playerRanking.getListOfPlayersTeams().size());
-        playerRanking.removePlayerTeamFromByID(exampleID);
-        System.out.println("Player ranking size after: " + playerRanking.getListOfPlayersTeams().size());
-        playerRanking.printPlayerRankingInfo();
-    }
-
-    //good
-    @Test
-    public void testRemoveTeamFromRanking() throws IOException{
-        PlayerRanking playerRanking = generateExampleRanking();
-        playerRanking.printPlayerRankingInfo();
-        System.out.println(" ");
-        playerRanking.removeTeamFromRankingByName(new Name.Builder().teamName("Cichociemni").build());
-        playerRanking.printPlayerRankingInfo();
-    }
-
-    //good
     @Test
     public  void testUpdatePlayerDataById() throws IOException {
         PlayerRanking playerRanking = new PlayerRanking();
+
         PlayerData playerData = PlayerDataTest.generateExamplePlayer();
-        playerRanking.addPlayerToRanking(playerData,null);
-        playerRanking.printPlayerRankingInfo();
+        playerRanking.addPlayerToRanking(playerData);
+
         PlayerData playerData1 = PlayerDataTest.generateExamplePlayer();
-        playerData1.setRecord(new Record.Builder().win(20).lose(20).build());
-        int id = playerRanking.getTeamPlayerIDByName(playerData.getName());
-        playerRanking.updatePlayerByID(id,playerData1,null);
+        playerData1.setTeam("Virtus");
+
+        playerRanking.updatePlayerByID(0,playerData1);
         playerRanking.saveRankingToFile();
-        playerRanking.printPlayerRankingInfo();
     }
 
-    //good
     @Test
-    public void testGetIdPlayerByName() throws IOException {
+    public void testGetIdPlayerByName(){
         PlayerData playerData = PlayerDataTest.generateExamplePlayer();
         PlayerRanking playerRanking = generateExampleRanking();
-        playerRanking.addPlayerToRanking(playerData,null);
         Name nameOfPlayer = playerData.getName();
 
-        int id = playerRanking.getTeamPlayerIDByName(nameOfPlayer);
+        int id = playerRanking.getPlayerIDByName(nameOfPlayer);
         System.out.println("ID: " + id);
     }
 
     @Test
-    public void testGenerateInfoTeamPlayerData()throws IOException{
-        PlayerRanking playerRanking = generateExampleRanking();
-        ArrayList<PlayerRanking.PlayerDataWithTeam> info = playerRanking.generatePlayerDataWithTeamInfo();
-        playerRanking.printPlayerRankingInfo();
-        System.out.println("Size: " + info.size());
-    }
-
-    //good
-    @Test
-    public static PlayerRanking generateExampleRanking() throws IOException {
+    public static PlayerRanking generateExampleRanking(){
         PlayerRanking playerRanking = new PlayerRanking();
 
         {
@@ -134,13 +79,9 @@ public class PlayerRankingTest {
                     .lose(3)
                     .build();
 
-            Name teamName = new Name.Builder().teamName("Rodzynki").build();
-            Team team = new Team(teamName);
-
-            PlayerData playerData = PlayerData.generatePlayer(name, record);
-            playerRanking.addPlayerToRanking(playerData,team);
+            PlayerData playerData = PlayerData.generatePlayer(name, record, "Rodzynki");
+            playerRanking.addPlayerToRanking(playerData);
         }
-
 
         {
             Name name = new Name.Builder().firstName("Tomek")
@@ -152,11 +93,8 @@ public class PlayerRankingTest {
                     .lose(1)
                     .build();
 
-            Name teamName = new Name.Builder().teamName("Cichociemni").build();
-            Team team = new Team(teamName);
-
-            PlayerData playerData = PlayerData.generatePlayer(name, record);
-            playerRanking.addPlayerToRanking(playerData,team);
+            PlayerData playerData = PlayerData.generatePlayer(name, record, "Cichociemni");
+            playerRanking.addPlayerToRanking(playerData);
         }
 
         {
@@ -169,11 +107,8 @@ public class PlayerRankingTest {
                     .lose(4)
                     .build();
 
-            Name teamName = new Name.Builder().teamName("Cichociemni").build();
-            Team team = new Team(teamName);
-
-            PlayerData playerData = PlayerData.generatePlayer(name, record);
-            playerRanking.addPlayerToRanking(playerData,team);
+            PlayerData playerData = PlayerData.generatePlayer(name, record, "Cichociemni");
+            playerRanking.addPlayerToRanking(playerData);
         }
 
         {
@@ -186,11 +121,8 @@ public class PlayerRankingTest {
                     .lose(6)
                     .build();
 
-            Name teamName = new Name.Builder().teamName("Magnus").build();
-            Team team = new Team(teamName);
-
-            PlayerData playerData = PlayerData.generatePlayer(name, record);
-            playerRanking.addPlayerToRanking(playerData,team);
+            PlayerData playerData = PlayerData.generatePlayer(name, record, "Magnus");
+            playerRanking.addPlayerToRanking(playerData);
         }
 
         {
@@ -203,11 +135,8 @@ public class PlayerRankingTest {
                     .lose(2)
                     .build();
 
-            Name teamName = new Name.Builder().teamName("Europa").build();
-            Team team = new Team(teamName);
-
-            PlayerData playerData = PlayerData.generatePlayer(name, record);
-            playerRanking.addPlayerToRanking(playerData,team);
+            PlayerData playerData = PlayerData.generatePlayer(name, record, "Europa");
+            playerRanking.addPlayerToRanking(playerData);
         }
 
         {
@@ -220,11 +149,8 @@ public class PlayerRankingTest {
                     .lose(4)
                     .build();
 
-            Name teamName = new Name.Builder().teamName("Europa").build();
-            Team team = new Team(teamName);
-
-            PlayerData playerData = PlayerData.generatePlayer(name, record);
-            playerRanking.addPlayerToRanking(playerData,team);
+            PlayerData playerData = PlayerData.generatePlayer(name, record, "Europa");
+            playerRanking.addPlayerToRanking(playerData);
         }
 
         {
@@ -237,15 +163,12 @@ public class PlayerRankingTest {
                     .lose(4)
                     .build();
 
-            Name teamName = new Name.Builder().teamName("Europa").build();
-            Team team = new Team(teamName);
-
-            PlayerData playerData = PlayerData.generatePlayer(name, record);
-            playerRanking.addPlayerToRanking(playerData,team);
+            PlayerData playerData = PlayerData.generatePlayer(name, record, "Europa");
+            playerRanking.addPlayerToRanking(playerData);
         }
 
         {
-            Name name = new Name.Builder().firstName("Jan")
+            Name name = new Name.Builder().firstName("Miłosz")
                     .middleName("Aleksander")
                     .surname("Kowalczyk")
                     .build();
@@ -254,9 +177,8 @@ public class PlayerRankingTest {
                     .lose(2)
                     .build();
 
-
-            PlayerData playerData = PlayerData.generatePlayer(name, record);
-            playerRanking.addPlayerToRanking(playerData,null);
+            PlayerData playerData = PlayerData.generatePlayer(name, record, "Rodzynki");
+            playerRanking.addPlayerToRanking(playerData);
         }
 
         return playerRanking;
