@@ -184,8 +184,7 @@ public class PlayerController implements Initializable  {
         alert.setTitle("Usuwanie gracza");
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.orElse(yes) == no) {
-            //usun gracza po id
+        if (result.orElse(no) == yes) {
             try {
                 ranking.removePlayerFromByID(lastSelected.getId());
                 ranking.saveRankingToFile();
