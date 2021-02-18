@@ -1,7 +1,7 @@
 package com.competition.MainPage;
 
-import com.competition.JSONDataBase.PlayerRanking.PlayerData.PlayerData;
 import com.competition.JSONDataBase.PlayerRanking.PlayerRanking;
+import com.competition.JSONDataBase.PlayerRanking.Team.Team;
 import com.competition.Player.PlayerController;
 import com.competition.menu.Menu;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -36,12 +36,12 @@ public class MainPageController implements Initializable {
     @FXML private AnchorPane paneShow;
     @FXML private Label LabelTest;
     @FXML private Label firstPlayerLabel;
-    @FXML private Button btnhelp;
+    @FXML private Label firstTeamLabel;
     @FXML private Button btnranking;
     @FXML private Button btneditplayerteam;
     @FXML private Button btncreatetournament;
-    @FXML private Button btnhistory;
     @FXML private TableView RankingList;
+    @FXML private TableView RankingListTeam;
     public static AnchorPane PublicPane;
 
     public MainPageController()throws IOException {
@@ -76,12 +76,9 @@ public class MainPageController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        btnhelp.setOnAction(event -> btnclick_help());
         btnranking.setOnAction(event -> btnclick_ranking());
         btneditplayerteam.setOnAction(event -> btnclick_editplayerteam());
         btncreatetournament.setOnAction(event -> btnclick_createtournament());
-        btnhistory.setOnAction(event -> btnclick_history());
-
     }
 
 
@@ -92,56 +89,122 @@ public class MainPageController implements Initializable {
             fxmlLoader.setLocation(url);
             fxmlLoader.setController(this);
             AnchorPane root=fxmlLoader.load();
-            List<PlayerData> listOfPlayers;
             PlayerRanking ranking = new PlayerRanking();
             ranking.loadRankingFromFile();
-            listOfPlayers = ranking.getListOfPlayers();
             List<RankingModel> list_of_player = new ArrayList<>();
-            listOfPlayers.stream().sorted();
-            listOfPlayers.sort((p1,p2) -> p2.getRecord().getWin()-p1.getRecord().getWin());
+            List<RankingModel> list_of_teams = new ArrayList<>();
+            ArrayList<PlayerRanking.PlayerDataWithTeam> listOfPlayers = new ArrayList<>();
+            listOfPlayers = ranking.generatePlayerDataWithTeamInfo();
+            listOfPlayers.sort((p1,p2)->p2.playerData.getRecord().getWin()-p1.playerData.getRecord().getWin());
             for(int i=0;listOfPlayers.size()>i;i++){
-                RankingModel record = new RankingModel.Builder().loses(listOfPlayers.get(i).getRecord().getLose()).wins(listOfPlayers.get(i).getRecord().getWin()).nameOfPlayer(listOfPlayers.get(i).getName().getFirstName()+" "+listOfPlayers.get(i).getName().getMiddleName()+" "+listOfPlayers.get(i).getName().getSurname()+" - "+listOfPlayers.get(i).getTeam()).place(i+1).build();
+                RankingModel record = new RankingModel.Builder()
+                        .loses(listOfPlayers.get(i).playerData.getRecord().getLose())
+                        .wins(listOfPlayers.get(i).playerData.getRecord().getWin())
+                        .nameOfPlayer(listOfPlayers.get(i).playerData.getName().getFirstName()+" "+listOfPlayers.get(i).playerData.getName().getMiddleName()+" "+listOfPlayers.get(i).playerData.getName().getSurname()+" - "+(listOfPlayers.get(i).team==null?"Brak zespołu":listOfPlayers.get(i).team.getName().getTeamName()))
+                        .place(i+1).build();
                 list_of_player.add(i,record);
             }
+            //var listteam = listOfPlayers.stream().filter(x->x.playerData.getName().getTeamName()=="a");
+            var lidtt = ranking.getListOfPlayersTeams();
+            for(var el:lidtt){
+                if(el instanceof Team) {
+                    int wins_res=0,lose_res=0;
+                    var TeamPlayers = ((Team) el).getTeamPlayerList();
+                    if(TeamPlayers.size()>0) {
+                        for (var PlayerEl : TeamPlayers) {
+                            wins_res += PlayerEl.getRecord().getWin();
+                            lose_res += PlayerEl.getRecord().getLose();
+                        }
+                        RankingModel record = new RankingModel.Builder()
+                                .loses(lose_res)
+                                .wins(wins_res)
+                                .nameOfPlayer((el.getName().getTeamName().trim().isEmpty() ? "Bez zespolu" : el.getName().getTeamName()) + " - " + TeamPlayers.size() + " gracz(y)")
+                                .place(0).build();
+                        list_of_teams.add(record);
+                    }
+                }
+            }
+            list_of_teams.sort((x1,x2)->x2.getWins()-x1.getWins());
+            for (int i=0;i<list_of_teams.size();i++){
+                list_of_teams.get(i).setPlace(i+1);
+            }
             ObservableList<RankingModel> PlayerTableData = FXCollections.observableArrayList(list_of_player);
-            //RankingList.setItems(PlayerTableData);
-            TableColumn colName = new TableColumn<>("Name");
-            TableColumn colPlace = new TableColumn<>("Place");
-            TableColumn colWins = new TableColumn<>("Wins");
-            TableColumn colLoses = new TableColumn<>("Loses");
-            colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, String>, ObservableValue<String>>() {
+            ObservableList<RankingModel> TeamTableData = FXCollections.observableArrayList(list_of_teams);
+
+            TableColumn colPlyName = new TableColumn<>("Name");
+            TableColumn colPlyPlace = new TableColumn<>("Place");
+            TableColumn colPlyWins = new TableColumn<>("Wins");
+            TableColumn colPlyLoses = new TableColumn<>("Loses");
+            TableColumn colTeamName = new TableColumn<>("Name");
+            TableColumn colTeamPlace = new TableColumn<>("Place");
+            TableColumn colTeamWins = new TableColumn<>("Wins");
+            TableColumn colTeamLoses = new TableColumn<>("Loses");
+            colPlyName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, String>, ObservableValue<String>>() {
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<RankingModel, String> c) {
                     return new SimpleStringProperty(c.getValue().getNameOfPlayer());
                 }
             });
-            colPlace.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, Integer>, ObservableValue<Integer>>() {
+            colPlyPlace.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, Integer>, ObservableValue<Integer>>() {
                 @Override
                 public ObservableValue<Integer> call(TableColumn.CellDataFeatures<RankingModel, Integer> c) {
                     return new SimpleIntegerProperty(c.getValue().getPlace()).asObject();
                 }
             });
-            colWins.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, Integer>, ObservableValue<Integer>>() {
+            colPlyWins.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, Integer>, ObservableValue<Integer>>() {
                 @Override
                 public ObservableValue<Integer> call(TableColumn.CellDataFeatures<RankingModel, Integer> c) {
                     return new SimpleIntegerProperty(c.getValue().getWins()).asObject();
                 }
             });
-            colLoses.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, Integer>, ObservableValue<Integer>>() {
+            colPlyLoses.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, Integer>, ObservableValue<Integer>>() {
                 @Override
                 public ObservableValue<Integer> call(TableColumn.CellDataFeatures<RankingModel, Integer> c) {
                     return new SimpleIntegerProperty(c.getValue().getLoses()).asObject();
                 }
             });
             //RankingList.
-            colName.setPrefWidth(500);
-            colPlace.setPrefWidth(200);
-            colWins.setPrefWidth(200);
-            colLoses.setPrefWidth(200);
+            colPlyName.setPrefWidth(400);
+            colPlyPlace.setPrefWidth(80);
+            colPlyWins.setPrefWidth(100);
+            colPlyLoses.setPrefWidth(100);
+            colTeamName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<RankingModel, String> c) {
+                    return new SimpleStringProperty(c.getValue().getNameOfPlayer());
+                }
+            });
+            colTeamPlace.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, Integer>, ObservableValue<Integer>>() {
+                @Override
+                public ObservableValue<Integer> call(TableColumn.CellDataFeatures<RankingModel, Integer> c) {
+                    return new SimpleIntegerProperty(c.getValue().getPlace()).asObject();
+                }
+            });
+            colTeamWins.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, Integer>, ObservableValue<Integer>>() {
+                @Override
+                public ObservableValue<Integer> call(TableColumn.CellDataFeatures<RankingModel, Integer> c) {
+                    return new SimpleIntegerProperty(c.getValue().getWins()).asObject();
+                }
+            });
+            colTeamLoses.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<RankingModel, Integer>, ObservableValue<Integer>>() {
+                @Override
+                public ObservableValue<Integer> call(TableColumn.CellDataFeatures<RankingModel, Integer> c) {
+                    return new SimpleIntegerProperty(c.getValue().getLoses()).asObject();
+                }
+            });
+            //RankingList.
+            colTeamName.setPrefWidth(400);
+            colTeamPlace.setPrefWidth(80);
+            colTeamWins.setPrefWidth(100);
+            colTeamLoses.setPrefWidth(100);
             firstPlayerLabel.setText("I miejsce - "+PlayerTableData.get(0).getNameOfPlayer());
+            firstTeamLabel.setText("I miejsce Zespół - "+TeamTableData.get(0).getNameOfPlayer());
             RankingList.getColumns().clear();
-            RankingList.getColumns().addAll(colPlace,colName,colWins,colLoses);
+            RankingListTeam.getColumns().clear();
+            RankingList.getColumns().addAll(colPlyPlace,colPlyName,colPlyWins,colPlyLoses);
+            RankingListTeam.getColumns().addAll(colTeamPlace,colTeamName,colTeamWins,colTeamLoses);
             RankingList.setItems(PlayerTableData);
+            RankingListTeam.setItems(TeamTableData);
             this.setPane(root);
         }catch (Exception ex){
             //log error
@@ -168,13 +231,6 @@ public class MainPageController implements Initializable {
         }
     }
 
-    public void btnclick_history(){
-
-    }
-
-    public void btnclick_help(){
-
-    }
 
 
 

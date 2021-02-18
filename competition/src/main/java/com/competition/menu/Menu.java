@@ -1,27 +1,21 @@
 package com.competition.menu;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.io.File;
-
 import com.competition.bracket.*;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Menu extends Application{
     private Stage stage;
@@ -56,7 +50,7 @@ public class Menu extends Application{
         GridPane root = new GridPane();
         root.setGridLinesVisible(false);
         root.setAlignment(Pos.CENTER);
-        root.setPrefHeight(900);
+        root.setPrefHeight(900);  
         root.setPrefWidth(1600);
         Button createTwoBracket = new Button("2 zawodników");
         createTwoBracket.setOnAction(new EventHandler<ActionEvent>(){
