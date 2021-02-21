@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="304.0" maxWidth="235.0" minHeight="304.0" minWidth="235.0" prefHeight="304.0" prefWidth="235.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="304.0" maxWidth="235.0" minHeight="304.0" minWidth="235.0" prefHeight="304.0" prefWidth="235.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="addName" layoutX="14.0" layoutY="64.0" prefHeight="25.0" prefWidth="200.0" />
       <TextField fx:id="addMidName" layoutX="14.0" layoutY="114.0" prefHeight="25.0" prefWidth="200.0" />

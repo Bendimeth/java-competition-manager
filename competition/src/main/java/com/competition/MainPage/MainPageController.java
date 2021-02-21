@@ -33,6 +33,7 @@ public class MainPageController implements Initializable {
 
     private final Stage thisStage;
     private Scene thisScene;
+    private final MainPageController controller1;
     @FXML private AnchorPane paneShow;
     @FXML private Label LabelTest;
     @FXML private Label firstPlayerLabel;
@@ -47,17 +48,38 @@ public class MainPageController implements Initializable {
     public MainPageController()throws IOException {
         thisStage = new Stage();
         URL url = new File("competition/src/main/java/com/competition/MainPage/MainPage.fxml").toURI().toURL();
+        controller1=this;
         try {
             FXMLLoader fxmlLoader= new FXMLLoader();
             fxmlLoader.setLocation(url);
             fxmlLoader.setController(this);
             Parent root=fxmlLoader.load();
             thisScene  = new Scene(root);
-            thisScene.getStylesheets().add("competition/src/main/java/com/competition/MainPage/main_styles.css");
+            //thisScene.getStylesheets().add("competition/src/main/java/com/competition/MainPage/main_styles.css");
             thisStage.setTitle("Tournament App");
             thisStage.setMaximized(true);
             thisStage.setScene(thisScene);
             btnclick_ranking();
+//            controller1=this;
+        }catch (Exception ex){
+            //log error
+            System.out.println(ex.getMessage());
+        }
+    }
+    public void redo(){
+        try {
+            URL url = new File("competition/src/main/java/com/competition/MainPage/MainPage.fxml").toURI().toURL();
+            FXMLLoader fxmlLoader= new FXMLLoader();
+            fxmlLoader.setLocation(url);
+            fxmlLoader.setController(this);
+            Parent root=fxmlLoader.load();
+            thisScene  = new Scene(root);
+            //thisScene.getStylesheets().add("competition/src/main/java/com/competition/MainPage/main_styles.css");
+            thisStage.setTitle("Tournament App");
+            thisStage.setMaximized(true);
+            thisStage.setScene(thisScene);
+            btnclick_ranking();
+//            controller1=this;
         }catch (Exception ex){
             //log error
             System.out.println(ex.getMessage());
@@ -70,6 +92,7 @@ public class MainPageController implements Initializable {
     }
 
     public void start_main_page(Stage stage) throws IOException {
+        //thisStage=stage;
         thisStage.showAndWait();
 
     }
@@ -216,7 +239,8 @@ public class MainPageController implements Initializable {
     public void btnclick_createtournament(){
         try {
             Menu amenu = new Menu();
-            amenu.start(thisStage);
+            amenu.start_menu(thisStage,this);
+
         }catch (Exception ex){
 
         }

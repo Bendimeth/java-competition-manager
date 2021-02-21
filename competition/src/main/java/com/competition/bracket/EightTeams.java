@@ -1,27 +1,28 @@
 package com.competition.bracket;
 
+import com.competition.JSONDataBase.PlayerRanking.PlayerData.PlayerData;
+import com.competition.JSONDataBase.PlayerRanking.PlayerData.Record;
+import com.competition.JSONDataBase.PlayerRanking.PlayerRanking;
+import com.competition.menu.Menu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class EightTeams extends Scene {
-
+    public com.competition.menu.Menu controller_=null;
     /**
      * Constructor that generates a GUI for the eight teams in the given teams ArrayList.
      * 
@@ -31,9 +32,9 @@ public class EightTeams extends Scene {
      * @param fill - Color to fill as background
      * @param teams - List of all teams participating in tournament. Length should be eight.
      */
-    public EightTeams(Parent root, double width, double height, Paint fill, ArrayList<Team> teams) {
+    public EightTeams(Parent root, double width, double height, Paint fill, ArrayList<Team> teams, Menu controller) {
         super(root, width, height, fill);
-
+        controller_=controller;
         // References to losers of semi-finals games in order to report 3rd place team at end
         Team gameOneLoser = new Team();
         Team gameTwoLoser = new Team();
@@ -53,6 +54,10 @@ public class EightTeams extends Scene {
         borderPane.getStyleClass().add("border-pane");
         gPane.setAlignment(Pos.CENTER);
         gPane.getStyleClass().add("pane");
+
+        Button btn_close = new Button();
+        btn_close.setText("Zakoncz");
+        btn_close.setOnAction(event -> back_t_menu());
 
         // Add shadows
         DropShadow shad = new DropShadow();
@@ -198,9 +203,13 @@ public class EightTeams extends Scene {
                     if (team1Score < 0 || team2Score < 0) { // Ensuring score input is non-negative
                         createInvalidInputAlert("Wartości muszą być dodatnie!");
                     } else if (team1Score > team2Score) {
+                        add_win(winner5.getText());
+                        add_lost(winner6.getText());
                         champ.setText("Zwycięzca: " + winner5.getText());
                         runnerUp.setText("Odpada w finale: " + winner6.getText());
                     } else if (team1Score < team2Score) {
+                        add_win(winner6.getText());
+                        add_lost(winner5.getText());
                         champ.setText("Zwycięzca: " + winner6.getText());
                         runnerUp.setText("Odpada w finale: " + winner5.getText());
                     } else {
@@ -321,6 +330,8 @@ public class EightTeams extends Scene {
         gPane.add(champ, 9, 9);
         gPane.add(runnerUp, 9, 15);
         gPane.add(thirdPlace, 9, 16);
+        gPane.add(btn_close,0,17);
+
     }
 
     /**
@@ -338,9 +349,9 @@ public class EightTeams extends Scene {
      * @param winner The winner of this game
      * @param winnerNum The number of the winner label. To reset winner label
      * @param nextWinner The winner of next rounds game. Used to reset label
-     * @param nextwinnerNum Number of the winner of next rounds game. Used to reset label
-     * @param futureWinner The winner of the game 2 rounds from now. Used to reset label
-     * @param futureWinnerNum Number of the winner of game 2 rounds from now. Used to reset label
+//     * @param nextwinnerNum Number of the winner of next rounds game. Used to reset label
+//     * @param futureWinner The winner of the game 2 rounds from now. Used to reset label
+//     * @param futureWinnerNum Number of the winner of game 2 rounds from now. Used to reset label
      * @param score1 Score of first team in this game
      * @param score2 Score of second team in this game
      * @param team1Index Index of first team in teams list
@@ -376,9 +387,13 @@ public class EightTeams extends Scene {
                     if (team1Score < 0 || team2Score < 0) { // Ensuring score input is non-negative
                         createInvalidInputAlert("Wartości muszą być dodatnie!");
                     } else if (team1Score > team2Score) {
+                        add_win(teams.get(team1Index).getTeamName());
+                        add_lost(teams.get(team2Index).getTeamName());
                         winner.setText(teams.get(team1Index).getTeamName()); // Updating winner
                         nextTextField.setDisable(false);
                     } else if (team1Score < team2Score) {
+                        add_win(teams.get(team2Index).getTeamName());
+                        add_lost(teams.get(team1Index).getTeamName());
                         winner.setText(teams.get(team2Index).getTeamName());
                         nextTextField.setDisable(false);
                     } else {
@@ -442,12 +457,15 @@ public class EightTeams extends Scene {
                         createInvalidInputAlert("Wartości muszą być dodatnie!");
                     } else if (team1Score > team2Score) {
                         winner.setText(contestant1.getText()); // Updating winner label to winning
-                                                               // team
+                        add_win(contestant1.getText());
+                        add_lost(contestant2.getText());// team
                         nextTextField.setDisable(false);
                         loser.setTeamName(contestant2.getText());
                         loser.setTeamScore(team2Score);
 
                     } else if (team1Score < team2Score) {
+                        add_win(contestant2.getText());
+                        add_lost(contestant1.getText());
                         winner.setText(contestant2.getText());
                         nextTextField.setDisable(false);
                         loser.setTeamName(contestant1.getText());
@@ -539,5 +557,53 @@ public class EightTeams extends Scene {
         input.setFocusTraversable(false);
         input.setDisable(true);
         return input;
+    }
+    private void add_win(String name){
+        PlayerRanking ranking = new PlayerRanking();
+        try {
+            PlayerData to_update = new PlayerData();
+            ranking.loadRankingFromFile();
+            List<PlayerRanking.PlayerDataWithTeam> PlayerTableData = ranking.generatePlayerDataWithTeamInfo();
+            for (var player : PlayerTableData) {
+                if (player.team!=null) {
+                    if (player.team.getName().getTeamName().equals(name)) {
+                        to_update = player.playerData;
+                        Record new_record = new Record.Builder().win(to_update.getRecord().getWin() + 1).lose(to_update.getRecord().getLose()).build();
+                        to_update.setRecord(new_record);
+                        ranking.updatePlayer(to_update, player.team);
+                    }
+                }
+            }
+        }catch (Exception ex){}
+        try{
+            ranking.saveRankingToFile();
+        }catch (Exception exception){}
+    }
+    private void add_lost(String name) {
+        PlayerRanking ranking = new PlayerRanking();
+        try {
+            PlayerData to_update = new PlayerData();
+            ranking.loadRankingFromFile();
+            List<PlayerRanking.PlayerDataWithTeam> PlayerTableData = ranking.generatePlayerDataWithTeamInfo();
+            for (var player : PlayerTableData) {
+                if (player.team!=null) {
+                    String idk = player.team.getName().getTeamName();
+                    if (idk.equals(name)) {
+                        to_update = player.playerData;
+                        Record new_record = new Record.Builder().win(to_update.getRecord().getWin()).lose(to_update.getRecord().getLose() + 1).build();
+                        to_update.setRecord(new_record);
+                        ranking.updatePlayer(to_update, player.team);
+                    }
+                }
+            }
+
+        }catch (Exception ex){}
+        try{
+            ranking.saveRankingToFile();
+        }catch (Exception exception){}
+    }
+    public void back_t_menu(){
+        controller_.back_to_menu();
+
     }
 }

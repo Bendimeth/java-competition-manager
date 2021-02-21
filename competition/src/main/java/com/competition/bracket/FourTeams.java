@@ -1,5 +1,9 @@
 package com.competition.bracket;
 
+import com.competition.JSONDataBase.PlayerRanking.PlayerData.PlayerData;
+import com.competition.JSONDataBase.PlayerRanking.PlayerData.Record;
+import com.competition.JSONDataBase.PlayerRanking.PlayerRanking;
+import com.competition.menu.Menu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -11,12 +15,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class FourTeams extends Scene {
-
+    public Menu controller_ =null;
     /**
      * Constructor that generates a GUI for the four teams in the given teams ArrayList.
      * 
@@ -26,8 +31,9 @@ public class FourTeams extends Scene {
      * @param fill - Color to fill as background
      * @param teams - List of all teams participating in tournament. Length should be four.
      */
-    public FourTeams(Parent root, double width, double height, Paint fill, ArrayList<Team> teams) {
+    public FourTeams(Parent root, double width, double height, Paint fill, ArrayList<Team> teams,Menu controller) {
         super(root, width, height, fill);
+        controller_=controller;
 
      // References to losers of semi-finals games in order to report 3rd place team at end
         Team gameOneLoser = new Team();
@@ -47,6 +53,10 @@ public class FourTeams extends Scene {
         borderPane.setCenter(gPane);
         gPane.setAlignment(Pos.CENTER);
         gPane.getStyleClass().add("pane");
+
+        Button btn_close = new Button();
+        btn_close.setText("Zakoncz");
+        btn_close.setOnAction(event -> back_t_menu());
 
      // Drop Shadow effect for the "Tournament Bracket" Title
         DropShadow shad = new DropShadow();
@@ -149,9 +159,13 @@ public class FourTeams extends Scene {
                     if (team1score < 0 || team2score < 0) { // Ensuring score input is non-negative
                         createInvalidInputAlert("Wynik musi być dodatni!");
                     } else if (team1score > team2score) {
+                        add_win(winner1.getText());
+                        add_lost(winner2.getText());
                         champ.setText("Zwycięzca: " + winner1.getText());
                         runnerUp.setText("Odpada w finale " + winner2.getText());
                     } else if (team1score < team2score) {
+                        add_win(winner2.getText());
+                        add_lost(winner1.getText());
                         champ.setText("Zwycięzca: " + winner2.getText());
                         runnerUp.setText("Odpada w finale " + winner1.getText());
                     } else {
@@ -209,6 +223,8 @@ public class FourTeams extends Scene {
         gPane.add(champ, 7, 5);
         gPane.add(runnerUp, 7, 10);
         gPane.add(thirdPlace, 7, 11);
+        gPane.add(btn_close,0,12);
+
     }
 
     /*
@@ -298,10 +314,10 @@ public class FourTeams extends Scene {
      *        when scores are submitted.
      * @param winner The winner of this game
      * @param winnerNum The number of the winner label. To reset winner label
-     * @param nextWinner The winner of next rounds game. Used to reset label
-     * @param nextwinnerNum Number of the winner of next rounds game. Used to reset label
-     * @param futureWinner The winner of the game 2 rounds from now. Used to reset label
-     * @param futureWinnerNum Number of the winner of game 2 rounds from now. Used to reset label
+//     * @param nextWinner The winner of next rounds game. Used to reset label
+//     * @param nextwinnerNum Number of the winner of next rounds game. Used to reset label
+//     * @param futureWinner The winner of the game 2 rounds from now. Used to reset label
+//     * @param futureWinnerNum Number of the winner of game 2 rounds from now. Used to reset label
      * @param score1 Score of first team in this game
      * @param score2 Score of second team in this game
      * @param team1Index Index of first team in teams list
@@ -339,12 +355,16 @@ public class FourTeams extends Scene {
                     } else if (team1Score < 0 || team2Score < 0) { // Ensuring score input is non-negative
                         System.out.println("Invalid Score: Scores must be positive");
                     } else if (team1Score > team2Score) {
+                        add_win(teams.get(team1Index).getTeamName());
+                        add_lost(teams.get(team2Index).getTeamName());
                         winner.setText(teams.get(team1Index).getTeamName()); // Updating winner
                         nextTextField.setDisable(false);
                         loser.setTeamName(teams.get(team2Index).getTeamName()); // Updating loser
                                                                                 // reference
                         loser.setTeamScore(team2Score);
                     } else if (team1Score < team2Score) {
+                        add_win(teams.get(team2Index).getTeamName());
+                        add_lost(teams.get(team1Index).getTeamName());
                         winner.setText(teams.get(team2Index).getTeamName());
                         nextTextField.setDisable(false);
                         loser.setTeamName(teams.get(team1Index).getTeamName()); // Updating loser
@@ -361,5 +381,53 @@ public class FourTeams extends Scene {
             }
         });
         return submit;
+    }
+    private void add_win(String name){
+        PlayerRanking ranking = new PlayerRanking();
+        try {
+            PlayerData to_update = new PlayerData();
+            ranking.loadRankingFromFile();
+            List<PlayerRanking.PlayerDataWithTeam> PlayerTableData = ranking.generatePlayerDataWithTeamInfo();
+            for (var player : PlayerTableData) {
+                if (player.team!=null){
+                    if (player.team.getName().getTeamName().equals(name)) {
+                        to_update = player.playerData;
+                        Record new_record = new Record.Builder().win(to_update.getRecord().getWin()+1).lose(to_update.getRecord().getLose()).build();
+                        to_update.setRecord(new_record);
+                        ranking.updatePlayer(to_update, player.team);
+                    }
+                }
+            }
+        }catch (Exception ex){}
+        try{
+            ranking.saveRankingToFile();
+        }catch (Exception exception){}
+    }
+    private void add_lost(String name) {
+        PlayerRanking ranking = new PlayerRanking();
+        try {
+            PlayerData to_update = new PlayerData();
+            ranking.loadRankingFromFile();
+            List<PlayerRanking.PlayerDataWithTeam> PlayerTableData = ranking.generatePlayerDataWithTeamInfo();
+            for (var player : PlayerTableData) {
+                if (player.team!=null) {
+                    String idk = player.team.getName().getTeamName();
+                    if (idk.equals(name)) {
+                        to_update = player.playerData;
+                        Record new_record = new Record.Builder().win(to_update.getRecord().getWin()).lose(to_update.getRecord().getLose() + 1).build();
+                        to_update.setRecord(new_record);
+                        ranking.updatePlayer(to_update, player.team);
+                    }
+                }
+            }
+
+        }catch (Exception ex){}
+        try{
+            ranking.saveRankingToFile();
+        }catch (Exception exception){}
+    }
+    public void back_t_menu(){
+        controller_.back_to_menu();
+
     }
 }

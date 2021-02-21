@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TableView fx:id="RankingList" layoutX="20.0" layoutY="107.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="107.0" />
       <Label fx:id="firstTeamLabel" alignment="CENTER" layoutX="988.0" layoutY="14.0" prefWidth="700.0" text="Label" textAlignment="CENTER" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
