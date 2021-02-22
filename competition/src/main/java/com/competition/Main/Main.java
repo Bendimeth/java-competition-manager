@@ -1,9 +1,12 @@
 package com.competition.Main;
 
+import com.competition.JSONDataBase.PlayerRanking.PlayerRanking;
+import com.competition.JSONDataBase.PlayerRanking.PlayerRankingTest;
 import com.competition.MainPage.MainPageController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -13,7 +16,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        String path = PlayerRanking.getPath();
+        File file =new File(path);
+        if(!file.exists()){
+            PlayerRankingTest.generateExampleRanking();
+        }
         MainPageController controller =new MainPageController();
+
         controller.start_main_page(stage);
 
     }

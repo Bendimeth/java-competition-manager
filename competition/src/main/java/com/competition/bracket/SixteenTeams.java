@@ -785,6 +785,5 @@ public class SixteenTeams extends Scene {
     }
     public void back_t_menu(){
         controller_.back_to_menu();
-
     }
 }
