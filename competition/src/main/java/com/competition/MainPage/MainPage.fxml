@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane fx:id="paneBtn" prefHeight="900.0" prefWidth="273.0" style="-fx-background-color: #734C29" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -23,14 +21,6 @@
                   <Font size="24.0" />
                </font></Button>
             <Button fx:id="btncreatetournament" blendMode="MULTIPLY" layoutY="366.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="273.0" text="Stwórz turniej">
-               <font>
-                  <Font size="24.0" />
-               </font></Button>
-            <Button fx:id="btnhistory" blendMode="MULTIPLY" layoutY="626.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="273.0" text="historia rozgrywek">
-               <font>
-                  <Font size="24.0" />
-               </font></Button>
-            <Button fx:id="btnhelp" blendMode="MULTIPLY" layoutY="756.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="273.0" text="instrukcja obslugi">
                <font>
                   <Font size="24.0" />
                </font></Button>

@@ -1,5 +1,9 @@
 package com.competition.bracket;
 
+import com.competition.JSONDataBase.PlayerRanking.PlayerData.PlayerData;
+import com.competition.JSONDataBase.PlayerRanking.PlayerData.Record;
+import com.competition.JSONDataBase.PlayerRanking.PlayerRanking;
+import com.competition.menu.Menu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -11,12 +15,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class TwoTeams extends Scene {
-
+    private  Menu controller_ =null;
     /**
      * Constructor that generates a GUI for the two teams in the given teams ArrayList.
      * 
@@ -26,17 +31,25 @@ public class TwoTeams extends Scene {
      * @param fill - Color to fill as background
      * @param teams - List of all teams participating in tournament. Length should be two.
      */
-    public TwoTeams(Parent root, double width, double height, Paint fill, ArrayList<Team> teams) {
+    public TwoTeams(Parent root, double width, double height, Paint fill, ArrayList<Team> teams,Menu controller) {
         super(root, width, height, fill);
-
+        controller_=controller;
         // Create GridPane
         GridPane gPane = new GridPane();
         gPane.setGridLinesVisible(false);
-
+//        try{
+//
+//        }catch (Exception exception){
+//
+//        }
         /*
          * The actual content of the scene will be stored in borderPane, which is a BorderPane
          * sitting in the root ScrollPane
          */
+        Button btn_close = new Button();
+        btn_close.setText("Zakoncz");
+        btn_close.setOnAction(event -> back_t_menu());
+
         ScrollPane scrollPane = ((ScrollPane) root);
         BorderPane borderPane = new BorderPane();
         scrollPane.setContent(borderPane);
@@ -107,6 +120,7 @@ public class TwoTeams extends Scene {
                 try {
                     // Retrieve scores entered by user. If scores are not numbers,
                     // NumberFormatException will be thrown
+
                     int team1score = Integer.parseInt(score1.getText().trim());
                     int team2score = Integer.parseInt(score2.getText().trim());
 
@@ -119,9 +133,13 @@ public class TwoTeams extends Scene {
                     if (team1score < 0 || team2score < 0) { // Ensuring score input is non-negative
                         createInvalidInputAlert("Wynik musi być dodatni!");
                     } else if (team1score > team2score) {
+                        add_win(teams.get(0).getTeamName());
+                        add_lost(teams.get(1).getTeamName());
                         champ.setText("Zwycięzca: " + teams.get(0).getTeamName());
                         runnerUp.setText("Odpada w finale: " + teams.get(1).getTeamName());
                     } else if (team1score < team2score) {
+                        add_lost(teams.get(0).getTeamName());
+                        add_win(teams.get(1).getTeamName());
                         champ.setText(("Zwycięzca: " + teams.get(1).getTeamName()));
                         runnerUp.setText("Odpada w finale: " + teams.get(0).getTeamName());
                     } else {
@@ -139,6 +157,7 @@ public class TwoTeams extends Scene {
         /*
          * Add all elements to their respective positions in the grid
          */
+        gPane.add(btn_close,0,7);
         gPane.add(round1, 0, 0);
         gPane.add(emptyRow, 0, 1, 4, 1);
         gPane.add(label1, 0, 2);
@@ -200,6 +219,55 @@ public class TwoTeams extends Scene {
         input.setPromptText("Punkty " + scoreNumber);
         input.setFocusTraversable(false);
         return input;
+    }
+
+    private void add_win(String name){
+        PlayerRanking ranking = new PlayerRanking();
+        try {
+            PlayerData to_update = new PlayerData();
+            ranking.loadRankingFromFile();
+            List<PlayerRanking.PlayerDataWithTeam> PlayerTableData = ranking.generatePlayerDataWithTeamInfo();
+            for (var player : PlayerTableData) {
+                if (player.team!=null) {
+                    if (player.team.getName().getTeamName().equals(name)) {
+                        to_update = player.playerData;
+                        Record new_record = new Record.Builder().win(to_update.getRecord().getWin() + 1).lose(to_update.getRecord().getLose()).build();
+                        to_update.setRecord(new_record);
+                        ranking.updatePlayer(to_update, player.team);
+                    }
+                }
+            }
+        }catch (Exception ex){}
+        try{
+            ranking.saveRankingToFile();
+        }catch (Exception exception){}
+    }
+    private void add_lost(String name) {
+        PlayerRanking ranking = new PlayerRanking();
+        try {
+            PlayerData to_update = new PlayerData();
+            ranking.loadRankingFromFile();
+            List<PlayerRanking.PlayerDataWithTeam> PlayerTableData = ranking.generatePlayerDataWithTeamInfo();
+            for (var player : PlayerTableData) {
+                if (player.team!=null) {
+                    String idk = player.team.getName().getTeamName();
+                    if (idk.equals(name)) {
+                        to_update = player.playerData;
+                        Record new_record = new Record.Builder().win(to_update.getRecord().getWin()).lose(to_update.getRecord().getLose() + 1).build();
+                        to_update.setRecord(new_record);
+                        ranking.updatePlayer(to_update, player.team);
+                    }
+                }
+            }
+
+        }catch (Exception ex){}
+        try{
+            ranking.saveRankingToFile();
+        }catch (Exception exception){}
+    }
+    public void back_t_menu(){
+        controller_.back_to_menu();
+
     }
 
 }

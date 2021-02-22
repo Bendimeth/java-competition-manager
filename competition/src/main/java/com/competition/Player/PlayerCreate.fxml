@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.competition.Player.PlayerController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="304.0" maxWidth="235.0" minHeight="304.0" minWidth="235.0" prefHeight="304.0" prefWidth="235.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="addName" layoutX="14.0" layoutY="64.0" prefHeight="25.0" prefWidth="200.0" />
+      <TextField fx:id="addMidName" layoutX="14.0" layoutY="114.0" prefHeight="25.0" prefWidth="200.0" />
+      <TextField fx:id="addSurname" layoutX="14.0" layoutY="164.0" prefHeight="25.0" prefWidth="200.0" />
+      <TextField fx:id="addTeam" layoutX="14.0" layoutY="214.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label layoutX="14.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" text="Imie" />
+      <Label layoutX="14.0" layoutY="189.0" prefHeight="25.0" prefWidth="200.0" text="Zespół" />
+      <Label layoutX="14.0" layoutY="139.0" prefHeight="25.0" prefWidth="200.0" text="Nazwisko" />
+      <Label layoutX="14.0" layoutY="89.0" prefHeight="25.0" prefWidth="200.0" text="Drugie imie" />
+      <Button fx:id="AddBtn" layoutX="14.0" layoutY="255.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Button" />
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" text="Dodawanie nowego użytkonika" />
+   </children>
 </AnchorPane>

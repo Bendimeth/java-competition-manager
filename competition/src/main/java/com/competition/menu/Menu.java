@@ -1,30 +1,26 @@
 package com.competition.menu;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.io.File;
-
+import com.competition.MainPage.MainPageController;
 import com.competition.bracket.*;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Menu extends Application{
     private Stage stage;
+    private MainPageController controller1;
     private ArrayList<Team> mockTeams = new ArrayList<Team>(
             Arrays.asList(
                     new Team("Team1", 1),
@@ -47,17 +43,40 @@ public class Menu extends Application{
     );
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //controller1=controller;
         stage = primaryStage;
         Scene scene = Menu();
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    public  void start_menu(Stage stage,MainPageController controller){
+        try {
+            start(stage);
+            controller1 = controller;
+        }catch (Exception exception){}
+    }
+    public Menu getStage(){
+        return this;
+    }
+
+    public void  back_to_menu() {
+        try {
+            //stage.close();
+            //var main=new MainPageController();
+            controller1.redo();
+            //main.start_main_page(null);
+        }catch (Exception ex){}
+
+    }
+
     public Scene Menu(){
         GridPane root = new GridPane();
         root.setGridLinesVisible(false);
         root.setAlignment(Pos.CENTER);
         root.setPrefHeight(900);
         root.setPrefWidth(1600);
+        stage.setMaximized(true);
         Button createTwoBracket = new Button("2 zawodników");
         createTwoBracket.setOnAction(new EventHandler<ActionEvent>(){
             public void handle(ActionEvent t){
@@ -83,37 +102,45 @@ public class Menu extends Application{
             }
         });
         // filler
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < 5; i++) {
             root.add(new Label(" "), 0, i * 2);
         }
         root.add(createTwoBracket, 0, 1);
         root.add(createFourBracket,0,3);
         root.add(createEightBracket, 0, 5);
         root.add(createSixteentBracket,0,7);
+        Button start_btn = new Button();
+        start_btn.setText("Cancel");
+        start_btn.setOnAction(event -> back_to_menu());
+        root.add(start_btn,0,9);
         return new Scene(root);
     }
     protected Scene CreateTwoBracket() {
+        setNames();
         ScrollPane scrollPane = new ScrollPane();
         SetBracketStyles(scrollPane);
-        Scene newScene = new TwoTeams(scrollPane, 1600, 900, Color.DARKGRAY, new ArrayList(mockTeams.subList(0, 2)));
+        Scene newScene= new TwoTeams(scrollPane, 1600, 900, Color.DARKGRAY, new ArrayList(mockTeams.subList(0, 2)),this);
         return newScene;
     }
     protected Scene CreateFourBracket() {
+        setNames();
         ScrollPane scrollPane = new ScrollPane();
         SetBracketStyles(scrollPane);
-        Scene newScene = new FourTeams(scrollPane, 1600, 900, Color.DARKGRAY, new ArrayList(mockTeams.subList(0, 4)));
+        Scene newScene = new FourTeams(scrollPane, 1600, 900, Color.DARKGRAY, new ArrayList(mockTeams.subList(0, 4)),this);
         return newScene;
     }
     protected Scene CreateEightBracket() {
+        setNames();
         ScrollPane scrollPane = new ScrollPane();
         SetBracketStyles(scrollPane);
-        Scene newScene = new EightTeams(scrollPane, 1600, 900, Color.DARKGRAY, new ArrayList(mockTeams.subList(0, 8)));
+        Scene newScene = new EightTeams(scrollPane, 1600, 900, Color.DARKGRAY, new ArrayList(mockTeams.subList(0, 8)),this);
         return newScene;
     }
     protected Scene CreateSixteenBracket() {
+        setNames();
         ScrollPane scrollPane = new ScrollPane();
         SetBracketStyles(scrollPane);
-        Scene newScene = new SixteenTeams(scrollPane, 1600, 900, Color.DARKGRAY, mockTeams);
+        Scene newScene = new SixteenTeams(scrollPane, 1600, 900, Color.DARKGRAY, mockTeams,this);
         return newScene;
     }
     public void SetBracketStyles(ScrollPane root) {
@@ -123,6 +150,12 @@ public class Menu extends Application{
     }
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void setNames(){
+        SetNames setNames = new SetNames();
+        setNames.main();
+        mockTeams = setNames.getTeams();
     }
 
 }
