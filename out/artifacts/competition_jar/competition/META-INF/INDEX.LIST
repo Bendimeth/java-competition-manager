@@ -1,0 +1,9 @@
+JarIndex-Version: 1.0
+
+ant-launcher.jar
+org
+org/apache
+org/apache/tools
+org/apache/tools/ant
+org/apache/tools/ant/launch
+

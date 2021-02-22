@@ -124,10 +124,11 @@ public class MainPageController implements Initializable {
                         .loses(listOfPlayers.get(i).playerData.getRecord().getLose())
                         .wins(listOfPlayers.get(i).playerData.getRecord().getWin())
                         .nameOfPlayer(listOfPlayers.get(i).playerData.getName().getFirstName()+" "+listOfPlayers.get(i).playerData.getName().getMiddleName()+" "+listOfPlayers.get(i).playerData.getName().getSurname()+" - "+(listOfPlayers.get(i).team==null?"Brak zespołu":listOfPlayers.get(i).team.getName().getTeamName()))
+                        .nameOfPlayer(listOfPlayers.get(i).playerData.getName().getFirstName())
                         .place(i+1).build();
                 list_of_player.add(i,record);
             }
-            //var listteam = listOfPlayers.stream().filter(x->x.playerData.getName().getTeamName()=="a");
+
             var lidtt = ranking.getListOfPlayersTeams();
             for(var el:lidtt){
                 if(el instanceof Team) {

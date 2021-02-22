@@ -105,7 +105,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.1</version>
                 <configuration>
-                    <mainClass>Main</mainClass>
+                    <mainClass>com.competition.Main.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
