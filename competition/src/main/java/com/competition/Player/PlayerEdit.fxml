@@ -15,7 +15,7 @@
         <Label layoutX="14.0" layoutY="189.0" prefHeight="25.0" prefWidth="200.0" text="Zespół" />
         <Label layoutX="14.0" layoutY="139.0" prefHeight="25.0" prefWidth="200.0" text="Nazwisko" />
         <Label layoutX="14.0" layoutY="89.0" prefHeight="25.0" prefWidth="200.0" text="Drugie imie" />
-        <Button fx:id="EditBtn" layoutX="14.0" layoutY="255.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Button" />
-        <Label layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" text="Edytowanie użytkonika" />
+        <Button fx:id="EditBtn" layoutX="14.0" layoutY="255.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Zapisz" />
+        <Label layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" text="Edytowanie użytkownika" />
     </children>
 </AnchorPane>

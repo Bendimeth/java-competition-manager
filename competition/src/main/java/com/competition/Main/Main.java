@@ -19,7 +19,8 @@ public class Main extends Application {
         String path = PlayerRanking.getPath();
         File file =new File(path);
         if(!file.exists()){
-            PlayerRankingTest.generateExampleRanking();
+            PlayerRanking playerRanking = PlayerRankingTest.generateExampleRanking();
+            playerRanking.saveRankingToFile();
         }
         MainPageController controller =new MainPageController();
 

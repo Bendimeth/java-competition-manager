@@ -16,6 +16,7 @@ public class PlayerRanking {
     private static String path;
 
     public static String getPath() {
+        generatePath();
         return path;
     }
 
